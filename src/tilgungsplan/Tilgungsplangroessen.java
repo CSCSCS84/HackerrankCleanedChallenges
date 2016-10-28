@@ -8,13 +8,18 @@ public class Tilgungsplangroessen {
 	private BigDecimal sollzins;
 	private BigDecimal tilgungAnfang;
 	private short zinsbindung;
+	private Tilgungsrhythmus tilgungsrhythmus;
+	Rundungsregel rundungsregel;
 
 	public Tilgungsplangroessen(BigDecimal darlehensbetrag, BigDecimal sollzins, BigDecimal tilgungAnfang,
-			short zinsbindung) {
+			short zinsbindung, Tilgungsrhythmus tilgungsrhythmus,Rundungsregel rundungsregel) {
+		super();
 		this.darlehensbetrag = darlehensbetrag;
 		this.sollzins = sollzins;
 		this.tilgungAnfang = tilgungAnfang;
 		this.zinsbindung = zinsbindung;
+		this.tilgungsrhythmus = tilgungsrhythmus;
+		this.rundungsregel=rundungsregel;
 	}
 
 	public BigDecimal getDarlehensbetrag() {
@@ -49,6 +54,20 @@ public class Tilgungsplangroessen {
 		this.zinsbindung = zinsbindung;
 	}
 
-	
-	
+	public Tilgungsrhythmus getTilgungsrhythmus() {
+		return tilgungsrhythmus;
+	}
+
+	public void setTilgungsrhythmus(Tilgungsrhythmus tilgungsrhythmus) {
+		this.tilgungsrhythmus = tilgungsrhythmus;
+	}
+
+	public Rundungsregel getRundungsregel() {
+		return rundungsregel;
+	}
+
+	public void setRundungsregel(Rundungsregel rundungsregel) {
+		this.rundungsregel = rundungsregel;
+	}
+
 }

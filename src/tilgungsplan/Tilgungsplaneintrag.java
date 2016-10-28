@@ -11,6 +11,16 @@ public class Tilgungsplaneintrag {
 	private BigDecimal tilgungsbetrag;
 	private BigDecimal rate;
 
+	public Tilgungsplaneintrag(Timestamp date, BigDecimal restschuld, BigDecimal zinsbetrag, BigDecimal tilgungsbetrag,
+			BigDecimal rate) {
+		super();
+		this.date = date;
+		this.restschuld = restschuld;
+		this.zinsbetrag = zinsbetrag;
+		this.tilgungsbetrag = tilgungsbetrag;
+		this.rate = rate;
+	}
+
 	public Timestamp getDate() {
 		return date;
 	}
@@ -51,12 +61,11 @@ public class Tilgungsplaneintrag {
 		this.rate = rate;
 	}
 
-	public String toString(OutputFormater outputFormater) {	
-		DateFormater df=outputFormater.getDateFormater();
-		BetragFormater bf=outputFormater.getBetragFormater();
-		return df.formateDate(date) + " " + bf.formatBetrag(restschuld) + " "
-				+ bf.formatBetrag(zinsbetrag) + " " + bf.formatBetrag(tilgungsbetrag)
-				+ " " + bf.formatBetrag(rate);
+	public String toString(OutputFormater outputFormater) {
+		DateFormater df = outputFormater.getDateFormater();
+		BetragFormater bf = outputFormater.getBetragFormater();
+		return df.formateDate(date) + " " + bf.formatBetrag(restschuld) + " " + bf.formatBetrag(zinsbetrag) + " "
+				+ bf.formatBetrag(tilgungsbetrag) + " " + bf.formatBetrag(rate);
 	}
 
 }

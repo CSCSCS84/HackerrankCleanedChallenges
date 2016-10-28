@@ -4,10 +4,12 @@ import java.util.LinkedList;
 
 public class Tilgungsplan {
 
-	LinkedList<Tilgungsplaneintrag> tilgungsplaneintraege;
+	private LinkedList<Tilgungsplaneintrag> tilgungsplaneintraege;
 
 	public Tilgungsplan() {
-		tilgungsplaneintraege = new LinkedList<>();
+		super();
+		this.tilgungsplaneintraege = new LinkedList<>();
+
 	}
 
 	public void addTilgungsplaneintrag(Tilgungsplaneintrag tilgungsplaneintrag) {
@@ -20,6 +22,14 @@ public class Tilgungsplan {
 			tilgungsplan.append(te.toString(outputFormater) + "\n");
 		}
 		return tilgungsplan.toString();
+	}
+
+	public LinkedList<Tilgungsplaneintrag> getTilgungsplaneintraege() {
+		return tilgungsplaneintraege;
+	}
+
+	public void setTilgungsplaneintraege(LinkedList<Tilgungsplaneintrag> tilgungsplaneintraege) {
+		this.tilgungsplaneintraege = tilgungsplaneintraege;
 	}
 
 }
