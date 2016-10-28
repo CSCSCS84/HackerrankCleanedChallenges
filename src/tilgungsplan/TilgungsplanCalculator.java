@@ -43,9 +43,6 @@ public class TilgungsplanCalculator {
 
 	private Tilgungsplaneintrag calcFirstTilgungsplaneintrag(Tilgungsplangroessen tilgungsplangroessen) {
 
-		Calendar mycal = new GregorianCalendar();
-
-		// setCalendarToLastDayOfMonth(mycal);
 		Tilgungsplaneintrag tp = new Tilgungsplaneintrag(calcNextDate(System.currentTimeMillis(),
 				tilgungsplangroessen.getTilgungsrhythmus()), tilgungsplangroessen.getDarlehensbetrag(), new BigDecimal(
 				"0"), tilgungsplangroessen.getDarlehensbetrag(), tilgungsplangroessen.getDarlehensbetrag());
@@ -91,5 +88,4 @@ public class TilgungsplanCalculator {
 		}
 		return date;
 	}
-
 }

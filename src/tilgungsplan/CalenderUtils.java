@@ -7,8 +7,12 @@ import java.util.GregorianCalendar;
 public class CalenderUtils {
 
 	public static Timestamp calcEndOfNextMonth(long time) {
-		Timestamp date = null;
-		return date;
+		Calendar cal=new GregorianCalendar();
+		cal.setTimeInMillis(time+1);
+	//	cal.add(Calendar.DAY_OF_MONTH, 1);
+		int maxDay=cal.getMaximum(Calendar.DAY_OF_MONTH);
+		cal.set(Calendar.DAY_OF_MONTH, maxDay);
+		return new Timestamp(cal.getTimeInMillis());
 	}
 
 	public static Timestamp calcEndOfNextQuartal(long time) {

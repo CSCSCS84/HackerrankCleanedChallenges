@@ -9,7 +9,6 @@ public class Tilgungsplan {
 	public Tilgungsplan() {
 		super();
 		this.tilgungsplaneintraege = new LinkedList<>();
-
 	}
 
 	public void addTilgungsplaneintrag(Tilgungsplaneintrag tilgungsplaneintrag) {
