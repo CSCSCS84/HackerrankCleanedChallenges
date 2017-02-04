@@ -46,6 +46,10 @@ public class EdgeEdmondKarp {
 		this.weight = weight;
 	}
 
+	public void addWeightToResidual(int weightToAdd) {
+		this.weightResidual += weightToAdd;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
