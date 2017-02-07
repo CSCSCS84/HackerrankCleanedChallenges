@@ -1,14 +1,43 @@
 package MaximumFlowAlgorithm;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.Scanner;
 
 public class EdmondsKarpAlgorithm {
+
+	public static void main(String[] args) throws FileNotFoundException {
+		String currentPath = System.getProperty("user.dir");
+		String pathOfTestCaseFile = currentPath + "" + "/TestData/EdmondsKarp/EdmondsKarpsTestData01.txt";
+		File file = new File(pathOfTestCaseFile);
+
+		Scanner sc = new Scanner(file);
+		int n = sc.nextInt();
+		int E = sc.nextInt();
+		int s = sc.nextInt() - 1;
+		int t = sc.nextInt() - 1;
+
+		GraphEdmondsKarp graph = new GraphEdmondsKarp(n);
+		for (int i = 1; i <= E; i++) {
+			int a = sc.nextInt() - 1;
+			int b = sc.nextInt() - 1;
+			int capacity = sc.nextInt();
+			graph.addEdge(a, b, capacity, 0);
+			graph.addEdge(b, a, 0, 0);
+		}
+		EdmondsKarpAlgorithm algo = new EdmondsKarpAlgorithm();
+		int maxFlow = algo.maxFlow(graph, s, t);
+		System.out.println(maxFlow);
+		sc.close();
+	}
+
 	private int maxFlow(GraphEdmondsKarp graph, int source, int target) {
 		initiliazeResidual(graph);
 
-		return 0;
+		return augmentGraphDFS(graph, source, target);
 
 	}
 
@@ -30,15 +59,22 @@ public class EdmondsKarpAlgorithm {
 				if (edge.weight - edge.getWeightResidual() > 0 && parent[v] == -1) {
 					parent[v] = u;
 					M[v] = Math.min(M[u], edge.weight - edge.getWeightResidual());
-					if (v != target)
+					if (v != target) {
 						Q.offer(v);
-					else {
+					} else {
 						// Backtrack search, and write flow
 						while (parent[v] != v) {
 							u = parent[v];
 							edge.addWeightToResidual((M[target]));
-							maxFlowValue += M[target];
+							// maxFlowValue += M[target];
+							// System.out.println(maxFlowValue);
+							EdgeEdmondKarp edge2 = graph.getEdge(target, source);
 							// F[v][u] -= M[target];
+							if (edge2 == null) {
+								graph.addEdge(target, source, edge.getWeight(), -M[target]);
+							} else {
+								edge2.addWeightToResidual(-M[target]);
+							}
 							v = u;
 						}
 						break LOOP;
@@ -46,7 +82,17 @@ public class EdmondsKarpAlgorithm {
 				}
 			}
 		}
-		return maxFlowValue;
+		if (parent[target] != -1) { // We did not find a path to t
+			int sum = 0;
+			for (EdgeEdmondKarp x : graph.getNodes()[source].getEdges()) {
+				sum += x.getWeight();
+				// System.out.println(sum);
+			}
+
+			return sum;
+		}
+		return 0;
+		// return maxFlowValue;
 
 	}
 
