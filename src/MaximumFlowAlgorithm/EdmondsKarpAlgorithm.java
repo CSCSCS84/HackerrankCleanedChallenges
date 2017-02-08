@@ -82,11 +82,11 @@ public class EdmondsKarpAlgorithm {
 				}
 			}
 		}
-		if (parent[target] != -1) { // We did not find a path to t
+		if (parent[target] == -1) { // We did not find a path to t
 			int sum = 0;
 			for (EdgeEdmondKarp x : graph.getNodes()[source].getEdges()) {
 				sum += x.getWeight();
-				// System.out.println(sum);
+				System.out.println(sum);
 			}
 
 			return sum;
