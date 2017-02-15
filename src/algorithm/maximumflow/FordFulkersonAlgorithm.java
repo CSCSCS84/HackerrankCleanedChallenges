@@ -6,13 +6,13 @@ package algorithm.maximumflow;
 import java.util.LinkedList;
 import java.util.Queue;
 
-public class FordFulkersonAlgorithm<T> {
+public class FordFulkersonAlgorithm {
 
 	public int fordFulkerson(LinkedList<Edge> graph[], int s, int t) {
 		int V = graph.length;
 		int u, v;
 
-		int[][] capacity = calculateCapacity(graph, V);
+		long[][] capacity = calculateCapacity(graph, V);
 		int parent[] = new int[V];
 
 		int max_flow = 0;
@@ -36,9 +36,9 @@ public class FordFulkersonAlgorithm<T> {
 		return max_flow;
 	}
 
-	private int[][] calculateCapacity(LinkedList<Edge>[] graph, int V) {
+	private long[][] calculateCapacity(LinkedList<Edge>[] graph, int V) {
 		int u;
-		int capacity[][] = new int[V][V];
+		long capacity[][] = new long[V][V];
 
 		for (u = 0; u < V; u++) {
 			if (graph[u] != null) {
@@ -50,8 +50,8 @@ public class FordFulkersonAlgorithm<T> {
 		return capacity;
 	}
 
-	private boolean bfs(int graph[][], int source, int target, int parent[]) {
-		int V = graph.length;
+	private boolean bfs(long capacity[][], int source, int target, int parent[]) {
+		int V = capacity.length;
 
 		boolean visited[] = new boolean[V];
 		visited[source] = true;
@@ -64,7 +64,7 @@ public class FordFulkersonAlgorithm<T> {
 		while (queue.size() != 0) {
 			int current = queue.poll();
 			for (int v = 0; v < V; v++) {
-				if (graph[current][v] > 0 && visited[v] == false) {
+				if (capacity[current][v] > 0 && visited[v] == false) {
 					queue.add(v);
 					parent[v] = current;
 					visited[v] = true;
