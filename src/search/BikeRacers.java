@@ -14,8 +14,8 @@ import java.io.FileNotFoundException;
 import java.util.LinkedList;
 import java.util.Scanner;
 
+import algorithm.maximumflow.Edge;
 import algorithm.maximumflow.FordFulkersonAlgorithm;
-
 
 public class BikeRacers {
 
@@ -42,8 +42,9 @@ public class BikeRacers {
 		while (low < right) {
 			long middle = (right + low) / 2;
 			// edges[i] stores List of edges to nodes
-			LinkedList<Short>[] edges = buildGraphForDistance(middle);
-			long sol = FordFulkersonAlgorithm.fordFulkerson(edges, N + M, N + M + 1);
+			LinkedList<Edge>[] edges = buildGraphForDistance(middle);
+			FordFulkersonAlgorithm<Integer> ford = new FordFulkersonAlgorithm<>();
+			long sol = ford.fordFulkerson(edges, N + M, N + M + 1);
 
 			if (sol >= K) {
 				right = middle;
@@ -68,39 +69,43 @@ public class BikeRacers {
 		return maxDistance;
 	}
 
-	static LinkedList<Short>[] buildGraphForDistance(long distance) {
+	static LinkedList<Edge>[] buildGraphForDistance(long distance) {
 		// s is n+m, t is n+m+1
-		LinkedList<Short>[] edges = new LinkedList[N + M + 2];
+		LinkedList<Edge>[] edges = new LinkedList[N + M + 2];
 		addEdgeBikerToBikes(distance, edges);
 		addEdgesSourceToBiker(edges);
 		addEdgesBikesToTarget(edges);
 		return edges;
 	}
 
-	private static void addEdgesBikesToTarget(LinkedList<Short>[] edges) {
+	private static void addEdgesBikesToTarget(LinkedList<Edge>[] edges) {
 		for (int i = N; i < N + M; i++) {
 			if (edges[i] == null) {
 				edges[i] = new LinkedList<>();
 			}
-			edges[i].add((short) (N + M + 1));
+			Edge edge = new Edge(i, N + M + 1, 1);
+			edges[i].add(edge);
 		}
 	}
 
-	private static void addEdgesSourceToBiker(LinkedList<Short>[] edges) {
-		edges[N + M] = new LinkedList<Short>();
+	private static void addEdgesSourceToBiker(LinkedList<Edge>[] edges) {
+		edges[N + M] = new LinkedList<Edge>();
 		for (int i = 0; i < N; i++) {
-			edges[N + M].add((short) (i));
+			Edge edge = new Edge(N + M, i, 1);
+
+			edges[N + M].add(edge);
 		}
 	}
 
-	private static void addEdgeBikerToBikes(long distance, LinkedList<Short>[] edges) {
+	private static void addEdgeBikerToBikes(long distance, LinkedList<Edge>[] edges) {
 		for (int i = 0; i < N; i++) {
 			for (int j = 0; j < M; j++) {
 				if (distanceBikerToBike[i][j] <= distance) {
 					if (edges[i] == null) {
-						edges[i] = new LinkedList<Short>();
+						edges[i] = new LinkedList<Edge>();
 					}
-					edges[i].add((short) (j + N));
+					Edge edge = new Edge(i, j + N, 1);
+					edges[i].add(edge);
 				}
 			}
 		}

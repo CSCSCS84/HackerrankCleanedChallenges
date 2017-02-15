@@ -1,44 +1,18 @@
+/**
+ * Implementation of FordFulkerson Algorithm using BFS
+ */
 package algorithm.maximumflow;
 
 import java.util.LinkedList;
+import java.util.Queue;
 
-public class FordFulkersonAlgorithm {
-	static boolean bfs(int rGraph[][], int s, int t, int parent[]) {
-		int V = rGraph.length;
+public class FordFulkersonAlgorithm<T> {
 
-		boolean visited[] = new boolean[V];
-		LinkedList<Integer> queue = new LinkedList<Integer>();
-		queue.add(s);
-		visited[s] = true;
-		parent[s] = -1;
-
-		// Standard BFS Loop
-		while (queue.size() != 0) {
-			int u = queue.poll();
-			for (int v = 0; v < V; v++) {
-				if (rGraph[u][v] > 0 && visited[v] == false) {
-					queue.add(v);
-					parent[v] = u;
-					visited[v] = true;
-				}
-			}
-		}
-		return (visited[t] == true);
-	}
-
-	public static int fordFulkerson(LinkedList<Short> graph[], int s, int t) {
+	public int fordFulkerson(LinkedList<Edge> graph[], int s, int t) {
 		int V = graph.length;
 		int u, v;
 
-		int capacity[][] = new int[V][V];
-
-		for (u = 0; u < V; u++) {
-			if (graph[u] != null) {
-				for (Short i : graph[u]) {
-					capacity[u][i] = 1;
-				}
-			}
-		}
+		int[][] capacity = calculateCapacity(graph, V);
 		int parent[] = new int[V];
 
 		int max_flow = 0;
@@ -60,5 +34,43 @@ public class FordFulkersonAlgorithm {
 		}
 
 		return max_flow;
+	}
+
+	private int[][] calculateCapacity(LinkedList<Edge>[] graph, int V) {
+		int u;
+		int capacity[][] = new int[V][V];
+
+		for (u = 0; u < V; u++) {
+			if (graph[u] != null) {
+				for (Edge edge : graph[u]) {
+					capacity[u][edge.getTarget()] = (int) edge.getCapacity();
+				}
+			}
+		}
+		return capacity;
+	}
+
+	private boolean bfs(int graph[][], int source, int target, int parent[]) {
+		int V = graph.length;
+
+		boolean visited[] = new boolean[V];
+		visited[source] = true;
+
+		Queue<Integer> queue = new LinkedList<Integer>();
+		queue.add(source);
+		parent[source] = -1;
+
+		// Standard BFS Loop
+		while (queue.size() != 0) {
+			int current = queue.poll();
+			for (int v = 0; v < V; v++) {
+				if (graph[current][v] > 0 && visited[v] == false) {
+					queue.add(v);
+					parent[v] = current;
+					visited[v] = true;
+				}
+			}
+		}
+		return (visited[target] == true);
 	}
 }
