@@ -26,11 +26,14 @@ public class BikeRacers {
 	static long distanceBikerToBike[][];
 
 	public static void main(String[] args) throws FileNotFoundException {
+		double time1 = System.currentTimeMillis();
 		String currentPath = System.getProperty("user.dir");
 		String pathOfTestCaseFile = currentPath + "" + "/TestData/BikeRacers/BikeRacersTestData14.txt";
 		readInput(pathOfTestCaseFile);
 		long solution = solveBikeRacers();
+		double time2 = System.currentTimeMillis();
 		System.out.println(solution);
+		System.out.println((time2 - time1) / 1000);
 
 	}
 
@@ -43,7 +46,7 @@ public class BikeRacers {
 			long middle = (right + low) / 2;
 			// edges[i] stores List of edges to nodes
 			LinkedList<Edge>[] edges = buildGraphForDistance(middle);
-			FordFulkersonAlgorithm<Integer> ford = new FordFulkersonAlgorithm<>();
+			FordFulkersonAlgorithm ford = new FordFulkersonAlgorithm();
 			long sol = ford.fordFulkerson(edges, N + M, N + M + 1);
 
 			if (sol >= K) {
