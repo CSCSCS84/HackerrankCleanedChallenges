@@ -2,9 +2,17 @@ package weekOfCode21;
 
 import java.util.Scanner;
 
+/**
+ * https://www.hackerrank.com/contests/w21/challenges/kangaroo
+ * 
+ * @author Christoph
+ * 
+ */
+
 public class Kangaroo {
 
 	public static void main(String[] args) {
+
 		Scanner in = new Scanner(System.in);
 		int x1 = in.nextInt();
 		int v1 = in.nextInt();
@@ -24,6 +32,7 @@ public class Kangaroo {
 		} else {
 			System.out.println("NO");
 		}
+		in.close();
 
 	}
 }
